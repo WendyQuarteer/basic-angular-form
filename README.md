@@ -106,64 +106,123 @@ Now your data is binded to the friend model.
 - [x] Add the required property to all inputs, this will make sure that angulars "invalid" tag gets added to the 
 fields that are not filled in.
 
-Make a class, or use a bootstrap class, that makes it clear that something is wrong with that input. 
+- [x] Make a class, or use a bootstrap class, that makes it clear that something is wrong with that input. 
 For example, a red border color.
 
 
-To conditionally add that class to your input, add [class.yourClassName]="property.invalid". This means the class "yourClassName" will be applied to the input when a specific property is invalid.
-Now the fields that are empty, and thus invalid, will have the invalid class applied. However, we don't want this when the user hasn't even touched the input. To add this functionality, change the condition to [class.yourClassName]="property.invalid && property.touched".
-The only way fields are invalid now, is when there's nothing in it and the user has touched the input already. However, if the user would for example put a sentence in the phone number field, we want to display it as invalid too.
-To do this, add the pattern property to the input field and as a value add the regular expression that it would have to suffice. Go to https://regex101.com/ if you want to test out and learn more about regex.
-Regex is hard and you don't have to do it perfectly, however it is manageable to
-Have no numbers in names
-Have no letters in phone numbers
-Have no special code characters allowed anywhere if they're not needed.
-Further error displaying is optional. You could for example add a message below each field. After that you can give it a conditional class, based on if the field is valid / touched or not. The class will make it not display if the field is valid.
-If all the fields are valid, the forms valid property will also be set to valid. Let's disable the button when the form is not valid.
-To check if the form is invalid, you'll need to use formName.form.invalid.
+- [x] To conditionally add that class to your input, add [class.yourClassName]="property.invalid". This means the class 
+"yourClassName" will be applied to the input when a specific property is invalid.
+Now the fields that are empty, and thus invalid, will have the invalid class applied. 
+
+- [x] However, we don't want this when the user hasn't even touched the input. To add this functionality, change the 
+condition to [class.yourClassName]="property.invalid && property.touched". The only way fields are invalid now, is 
+when there's nothing in it and the user has touched the input already. 
+
+- [x] However, if the user would for example put a sentence in the phone number field, we want to display it as invalid too.
+To do this, add the pattern property to the input field and as a value add the regular expression that it would have 
+to suffice. Go to https://regex101.com/ if you want to test out and learn more about regex.
+Regex is hard and you don't have to do it perfectly, however it is manageable to Have no numbers in names &
+Have no letters in phone numbers & Have no special code characters allowed anywhere if they're not needed.
+
+Further error displaying is optional. You could for example add a message below each field. 
+After that you can give it a conditional class, based on if the field is valid / touched or not. The class will make it not display if the field is valid.
+If all the fields are valid, the forms valid property will also be set to valid. 
+
+- [x] Let's disable the button when the form is not valid. To check if the form is invalid, you'll need to use formName.form.invalid.
 You can make a conditional property again by entering [property]="condition" in your button. Disable the button conditionally based on the invalidity of the form.
-Now that the form validation is set up, add the "novalidate" property to your form to prevent the automatic browser validation.
+
+- [x] Now that the form validation is set up, add the "novalidate" property to your form to prevent the automatic browser validation.
 To see if your button is actually getting disabled, inspect your button HTML in the browser.
-Let's submit the data to a server now, but before we can do that we need to be able to do something on submit and get access to http requests.
-If you add the ngSubmit property to your form, you can bind a function to it and use that function in your component class to trigger it on submit. This is how it looks like: (ngSubmit)="yourFunction()".
-In your component class, define the function and console log your friend model. Now when you submit you'll see the data appear in your console.
-To add this friend to your friendlist server, we'll need to make a service for it. We'll use the cli for this and input the command ng g s addFriend. This means, a"ng"ular "g"enerate "s"ervice with name "addFriendService", when you generate a service you'll see that after the name you've given it will automatically add "Service" after it.
-In your newly generated addFriend.service.ts file, import the HttpClient. In your addFriend class, add a new private property called http to the constructor. Typehint it to be of type HttpClient.
-You'll also have to import the HttpClientModule in your app.module.ts, also add it to the imports array below.
+
+- [x] Let's submit the data to a server now, but before we can do that we need to be able to do something on submit and get 
+access to http requests. If you add the ngSubmit property to your form, you can bind a function to it and use that 
+function in your component class to trigger it on submit. This is how it looks like: (ngSubmit)="yourFunction()".
+
+- [x] In your component class, define the function and console log your friend model. 
+Now when you submit you'll see the data appear in your console.
+
+- [x] To add this friend to your friendlist server, we'll need to make a service for it. We'll use the cli for this and 
+input the command ng g s addFriend. This means, a"ng"ular "g"enerate "s"ervice with name "addFriendService", 
+when you generate a service you'll see that after the name you've given it will automatically add "Service" after it.
+
+- [x] In your newly generated addFriend.service.ts file, import the HttpClient. 
+In your addFriend class, add a new private property called http to the constructor. Typehint it to be of type HttpClient.
+
+- [x] You'll also have to import the HttpClientModule in your app.module.ts, also add it to the imports array below.
 We now have our data on submit and we're in a position to start http requests. Now we want to post our data to a server.
-In the service, make a method called addFriend and give it a parameter, typehint it to be of the Friend type. You'll also need to import Friend.
-In this method, write a post request. It looks like this: this.http.post(url, data). Return it afterwards, what you'll get back in something called an observable. http is the property HttpClient, is the type of data your post can contain and url is the url you're sending the data to.
+
+- [x] In the service, make a method called addFriend and give it a parameter, typehint it to be of the Friend type. 
+You'll also need to import Friend.
+
+- [x] In this method, write a post request. It looks like this: this.http.post(url, data). 
+Return it afterwards, what you'll get back in something called an observable. 
+http is the property HttpClient, is the type of data your post can contain and url is the url you're sending the data to.
 We'll get back to the url later. For now, make a property called 'url' and leave it as an empty string.
-In your app.component.ts also import your service and make a constructor in the component class. Add a private "addFriendService" property and typehint it.
-Now we can use the service in the method that triggers when the form gets submitted. In the method, call the addFriend method of the addFriendService and pass the friend data to it.
-The method we made returns something called an "observable". If you want, you can also work with promises, however in this case we used an observable and to get the data out of it, we need to subscribe to it.
+
+- [x] In your app.component.ts also import your service and make a constructor in the component class. Add a private 
+"addFriendService" property and typehint it.
+
+- [x] Now we can use the service in the method that triggers when the form gets submitted. In the method, call the 
+addFriend method of the addFriendService and pass the friend data to it.
+
+- [x] The method we made returns something called an "observable". If you want, you can also work with promises, 
+however in this case we used an observable and to get the data out of it, we need to subscribe to it.
 The code to subscribe to an observable looks like this observable.subscribe(data => it worked, error => it didn't work).
 Everything is set up in order to send data to your local api.
-First, in the server.js file in the server folder, change the port to whatever number you like that is not occupied. Port numbers 9000 - 9099 are always safe, just make sure no other application is running on those ports.
-In the server folder in your terminal, run the command node server. You won't get any confirmation that the server is running, just a blank new line. Now navigate to localhost:PORT.
-You should see "Hello from server". That is because the get function in the server file with the root "/" as it's path sent it as a response.
-You'll find an array allFriends, this is where you'll push your new friend to. But first, let's take a look at your friends in the server.
-Add a new get function with path "allFriends" and send the allFriends variable as a response. If you make changes to your server, make sure it's not running and then run it again with the node server command.If you now navigate to localhost:PORT/allFriends you'll get to see all your friends.
-Remember the url that we left empty? It's time to configure a path to which we'll post our data. Start by changing the url to 'http://localhost:PORT/'.
-Next, make a new post function with path "addFriend". In here, push the request body to the allFriends array.
-If you now go to your form and add a friend, submit the form, you'll see in your server, localhost:PORT/allFriends, that the friend has been added to the list.
-You've sent data, but now we also want to display the newly updated friend list on your page. To do this, we'll have to make a get request to the server.
-We want to do this get request in 2 different cases, one is when the page loads and the other is when we post data to the server.
-First, let's write the function itself and later call the function when we need it. Make a new public async function in the component and pass the url as a parameter. Typehint the parameter and the function. The function will return a Promise of type any. A typehint of a promise with type looks like this: Promise.
-Then, add a fetch to the function and return and await it. The method should be get and the headers should be 'Content-Type': 'application/json'.
-Add a property to your component class called allFriends and in the fetch where you can access the fetched data, assign the value of the data to that property.
-We now have our fetch working, let's call it when we submit the form first. To do this in the success part of the subscribe, call the function with url 'http://localhost:PORT/allFriends'.
+
+- [x] First, in the server.js file in the server folder, change the port to whatever number you like that is not 
+occupied. Port numbers 9000 - 9099 are always safe, just make sure no other application is running on those ports.
+In the server folder in your terminal, run the command node server. You won't get any confirmation that the server 
+is running, just a blank new line. Now navigate to localhost:PORT.(localhost 6969 because that's where I'm at).
+You should see "Hello from server". That is because the get function in the server file with the root "/" as it's 
+path sent it as a response. 
+
+- [x] You'll find an array allFriends, this is where you'll push your new friend to. 
+But first, let's take a look at your friends in the server.
+Add a new get function with path "allFriends" and send the allFriends variable as a response. If you make changes 
+to your server, make sure it's not running and then run it again with the node server command.
+If you now navigate to localhost:PORT/allFriends you'll get to see all your friends.
+
+- [x] Remember the url that we left empty? It's time to configure a path to which we'll post our data. Start by changing 
+the url to 'http://localhost:PORT/'.
+
+- [x] Next, make a new post function with path "addFriend". In here, push the request body to the allFriends array.
+
+- [x] If you now go to your form and add a friend, submit the form, you'll see in your server, localhost:PORT/allFriends, 
+that the friend has been added to the list. 
+
+You've sent data, but now we also want to display the newly updated friend list on your page. 
+To do this, we'll have to make a get request to the server. We want to do this get request in 2 different cases, 
+one is when the page loads and the other is when we post data to the server.
+First, let's write the function itself and later call the function when we need it. Make a new public async 
+function in the component and pass the url as a parameter. Typehint the parameter and the function. The function 
+will return a Promise of type any. A typehint of a promise with type looks like this: Promise.
+
+Then, add a fetch to the function and return and await it. The method should be get and the headers should be 
+'Content-Type': 'application/json'. Add a property to your component class called allFriends and in the fetch where 
+you can access the fetched data, assign the value of the data to that property. 
+
+We now have our fetch working, let's call it when we submit the form first. To do this in the success part of 
+the subscribe, call the function with url 'http://localhost:PORT/allFriends'.
 To do it on page load, import OnInit. Next your AppComponent class has to implement it.
-To make something happen on pageload, in the class add ngOnInit(): any { something happens }. In here, call your fetch function like we did previously for the form submit.
-We now have our friend list updated in the property allFriends of the component class.
-To check if you have your friends data console log it.
+
+To make something happen on pageload, in the class add ngOnInit(): any { something happens }. In here, call your f
+etch function like we did previously for the form submit. We now have our friend list updated in the property 
+allFriends of the component class. To check if you have your friends data console log it.
+
 Now we can display the friends in the template using the property allFriends.
 To do this we'll use the ngFor loop, add the following code to a div: *ngFor="let friend of allFriends".
-In this div, if you enter {{ friend.email }} for example. You'll see that on your page you'll see all the emails of your friends displayed.
-Now display all details of your friends, try adding new friends in the process. It updates instantly!
-You now have all the must-have features. Congratulations! If you have time left, be sure to take a look at the nice-to-have features. Here are some suggestions as well:
-Try removing people from your friend list based on email. Post the email of a friend, find the friend on the server and pop it out of the array.
+
+In this div, if you enter {{ friend.email }} for example. You'll see that on your page you'll see all the emails of 
+your friends displayed. Now display all details of your friends, try adding new friends in the process. It 
+updates instantly!
+
+You now have all the must-have features. Congratulations! 
+
+If you have time left, be sure to take a look at the nice-to-have features. Here are some suggestions as well:
+Try removing people from your friend list based on email. Post the email of a friend, find the friend on the server 
+and pop it out of the array.
 Try updating the data from a friend based on email. Same thing, post the email and find that friend, update the values.
-Make seperate pages by generating new components! You'll have to look into routing as well!
+Make separate pages by generating new components! You'll have to look into routing as well!
 Get creative!
 Congratulations, you survived the first steps of Angular and Node. I'm proud of you!

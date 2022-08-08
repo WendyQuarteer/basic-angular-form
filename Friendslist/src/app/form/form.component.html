@@ -1,0 +1,50 @@
+<p>form works!</p>
+<!-- Error reporting, give some visual feedback to the user if they put something wrong in the inputs.-->
+<!--{{ friendForm.value | json }}--><!--comes from form or json added wen-- checking value in real time-->
+<form #friendForm="ngForm" novalidate (ngSubmit)="submitForm()">
+
+  <!--name-->
+  <label for="name">First name:</label>
+  <input #name="ngModel" type="text" id="name" name="name" placeholder="your name here" required
+         pattern="[a-zA-Z ]+"
+         [(ngModel)]="friendModel.name"
+         [class.valid]="name.valid && name.touched"
+         [class.invalid]="name.invalid && name.touched"
+  >
+
+  <!--lastname-->
+  <label for="lastname">Last name:</label>
+  <input #lastname="ngModel" type="text" id="lastname" name="lastname" placeholder="your lastname here" required
+         pattern="[a-zA-Z ]+"
+         [(ngModel)]="friendModel.lastname"
+         [class.valid]="lastname.valid && lastname.touched"
+         [class.invalid]="lastname.invalid && lastname.touched"
+  >
+
+  <!--email-->
+  <label for="email">Email:</label>
+  <input #email="ngModel" type="email" id="email" name="email" placeholder="your email here" required
+         pattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+         [(ngModel)]="friendModel.email"
+         [class.valid]="email.valid && email.touched"
+         [class.invalid]="email.invalid && email.touched"
+  >
+
+  <!--phone-->
+  <label for="phone">Phone number:</label>
+  <input #phone="ngModel" type="tel" id="phone" name="phone" placeholder="your phone number here" required
+         pattern="[0-9]{10,}"
+         [(ngModel)]="friendModel.phone"
+         [class.valid]="phone.valid && phone.touched"
+         [class.invalid]="phone.invalid && phone.touched && phone.dirty"
+  >
+  <!--favorite-language-->
+  <label for="favoriteLanguage">Favorite language:</label>
+  <select #favoriteLanguage="ngModel" [(ngModel)]="friendModel.favoriteLanguage" name="favoriteLanguage" id="favoriteLanguage">
+    <option *ngFor="let language of languages;" value="{{language}}">{{language}}</option>
+    <!-- for-loop for the form-languages (angular) taken from languages string form component-->
+  </select>
+
+  <button type="submit" id="submit" [disabled]="friendForm.form.invalid">Submit!</button>
+
+</form>

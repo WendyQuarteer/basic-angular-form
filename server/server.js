@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const {request, response} = require("express");
 const app = express();
 
 const PORT = 6969;
@@ -26,6 +27,15 @@ app.get('/', function (request, response) {
 
 app.post('/', function (request, response) {
     response.status(200).send({"message": "Data received"});
+});
+
+app.get ('/allFriends', function (request, response) {
+response.send(allFriends);
+});
+
+app.post('/allFriends',function (request, response) {
+    allFriends.push(request.body);
+    response.send(allFriends);
 });
 
 

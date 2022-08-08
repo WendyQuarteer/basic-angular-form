@@ -1,0 +1,11 @@
+
+.invalid {
+  border-left: 5px solid red;
+}
+
+.valid {
+  border-left: 5px solid green;
+}
+
+
+
